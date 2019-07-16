@@ -11,9 +11,12 @@ RUN apk add --no-cache \
 
 RUN mkdir /app
 WORKDIR /app
-RUN git clone https://github.com/maccyber/micro-dockerhub-hook.git /app
-RUN npm ci
+COPY lib lib
+COPY index.js .
+COPY package.json .
+COPY yarn.lock .
+RUN yarn install --production
 
 EXPOSE 3000
 
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["yarn", "start"]

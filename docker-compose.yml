@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  hub-hook-handler:
+    image: protonradio/hub-hook-handler:latest
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./scripts:/src/scripts
+      - ./config.js:/app/config.js

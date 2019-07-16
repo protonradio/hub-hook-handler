@@ -1,0 +1,24 @@
+{
+  "name": "hub-hook-handler",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro",
+    "dev": "micro-dev -H localhost",
+    "test": "ava",
+    "coverage": "nyc ava",
+    "coveralls": "nyc ava && nyc report --reporter=lcov && cat coverage/lcov.info | coveralls"
+  },
+  "devDependencies": {
+    "ava": "2.2.0",
+    "axios": "0.19.0",
+    "coveralls": "3.0.5",
+    "micro-dev": "3.0.0",
+    "nyc": "14.1.1",
+    "test-listen": "1.1.0"
+  },
+  "dependencies": {
+    "micro": "9.3.4"
+  }
+}
