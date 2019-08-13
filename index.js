@@ -1,11 +1,11 @@
-const { json, send } = require("micro");
 const { parse } = require("url");
+const { json, send } = require("micro");
 const logger = require("./lib/log");
-const validateReq = require("./lib/validate-req");
 const runScript = require("./lib/run-script");
+const validateReq = require("./lib/validate-req");
 
 module.exports = async (req, res) => {
-  const hooks = require("./scripts");
+  const hooks = require("./config/hook");
   const { pathname } = await parse(req.url, false); // gets url path
 
   if (pathname === "/ping") return send(res, 200, "pong");

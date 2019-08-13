@@ -1,4 +1,4 @@
-FROM node:10.16.0-alpine
+FROM node:10.16.2-alpine
 
 RUN apk add --no-cache \
     curl \
@@ -11,11 +11,13 @@ RUN apk add --no-cache \
 
 RUN mkdir /app
 WORKDIR /app
-COPY lib lib
-COPY index.js .
+
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install --production
+
+COPY lib lib
+COPY index.js .
 
 EXPOSE 3000
 

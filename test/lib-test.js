@@ -1,8 +1,8 @@
 process.env.DEBUG = "false";
 const test = require("ava");
 const validateReq = require("../lib/validate-req");
-const config = require("../config");
-const hooks = require("../scripts");
+const config = require("../config/config");
+const hooks = require("../config/hook");
 
 test("no token given", t => {
   try {
@@ -78,6 +78,6 @@ test("Repo does not exist", t => {
     };
     validateReq({ pathname, payload, hooks });
   } catch (e) {
-    t.is(e.message, "protonradio/not-exist does not exist in scripts/index.js");
+    t.is(e.message, "protonradio/not-exist does not exist in config/hook.js");
   }
 });
