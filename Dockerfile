@@ -9,6 +9,8 @@ RUN apk add --no-cache \
     openssh \
     sshpass
 
+RUN npm install -g npm
+
 RUN mkdir /app
 WORKDIR /app
 
