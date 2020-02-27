@@ -1,2 +1,2 @@
-echo "I fail"
+echo "Epic fail"
 exit 1

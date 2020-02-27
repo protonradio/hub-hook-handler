@@ -3,9 +3,11 @@ const { json, send } = require("micro");
 const logger = require("./lib/log");
 const runScript = require("./lib/run-script");
 const validateReq = require("./lib/validate-req");
+const slackNotification = require("./lib/slack-notification");
 
 module.exports = async (req, res) => {
   const hooks = require("./config/hook");
+  const { slackConfig } = require("./config/config");
   const { pathname } = await parse(req.url, false); // gets url path
 
   if (pathname === "/ping") return send(res, 200, "pong");
@@ -46,6 +48,7 @@ module.exports = async (req, res) => {
       `${result}\nFinished running hook "${hook}" for repository "${payload.repository.repo_name}"`
     );
   } catch (e) {
+    slackNotification(slackConfig, `Error running hook: ${e.toString()}`);
     logger("err", e);
   }
 };
