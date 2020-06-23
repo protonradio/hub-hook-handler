@@ -1,8 +1,8 @@
-FROM node:10.19.0-alpine
+FROM node:12.18.1-alpine3.12
 
 RUN apk add --no-cache \
     curl \
-    python \
+    python3 \
     make \
     git \
     g++ \
