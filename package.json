@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "micro": "9.3.4",
-    "needle": "2.5.2"
+    "needle": "2.6.0"
   }
 }
