@@ -1,4 +1,4 @@
-FROM node:12.20.1-alpine3.12
+FROM node:12.22.1-alpine3.12
 
 RUN apk add --no-cache \
     curl \
@@ -9,7 +9,7 @@ RUN apk add --no-cache \
     openssh \
     sshpass
 
-RUN npm install -g npm
+RUN npm install -g npm@6
 
 RUN mkdir /app
 WORKDIR /app
