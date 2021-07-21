@@ -1,4 +1,4 @@
-FROM node:12.22.1-alpine3.12
+FROM node:12.22.3-alpine3.14
 
 RUN apk add --no-cache \
     curl \
