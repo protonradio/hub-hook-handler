@@ -10,14 +10,14 @@
     "coveralls": "nyc ava && nyc report --reporter=lcov && cat coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "ava": "4.2.0",
-    "axios": "0.26.1",
+    "ava": "5.3.1",
+    "axios": "1.4.0",
     "coveralls": "3.1.1",
     "nyc": "15.1.0",
     "test-listen": "1.1.0"
   },
   "dependencies": {
-    "micro": "9.3.4",
+    "micro": "10.0.1",
     "needle": "3.2.0"
   }
 }
