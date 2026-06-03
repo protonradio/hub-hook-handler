@@ -17,6 +17,7 @@ module.exports = async (req, res) => {
     payload = await json(req);
   } catch (e) {
     logger("err", "Missing JSON payload");
+    logger("err", e);
     return send(res, 400, "Missing JSON payload");
   }
 
