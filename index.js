@@ -14,6 +14,12 @@ module.exports = async (req, res) => {
 
   let payload;
   try {
+    logger("debug", {
+      method: req.method,
+      path: req.path,
+      contentType: req.headers["content-type"],
+      body: req.body
+    });
     payload = await json(req);
   } catch (e) {
     logger("err", "Missing JSON payload");
