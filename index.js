@@ -1,5 +1,5 @@
 const { parse } = require("url");
-const { json, send } = require("micro");
+const { text, send } = require("micro");
 const logger = require("./lib/log");
 const runScript = require("./lib/run-script");
 const validateReq = require("./lib/validate-req");
@@ -12,18 +12,20 @@ module.exports = async (req, res) => {
 
   if (pathname === "/ping") return send(res, 200, "pong");
 
-  let payload;
+  let payload, rawBody;
   try {
-    logger("debug", {
-      method: req.method,
-      path: req.path,
-      contentType: req.headers["content-type"],
-      body: req.body
-    });
-    payload = await json(req);
+    rawBody = await text(req);
+    payload = JSON.parse(rawBody);
   } catch (e) {
-    logger("err", "Missing JSON payload");
+    logger("err", "Error parsing request:");
     logger("err", e);
+    logger("err", {
+      method: req.method,
+      path: pathname,
+      contentType: req.headers["content-type"],
+      bodyLength: rawBody?.length,
+      bodyPreview: rawBody?.slice(0, 200)
+    });
     return send(res, 400, "Missing JSON payload");
   }
 
