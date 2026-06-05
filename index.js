@@ -1,4 +1,3 @@
-const { parse } = require("url");
 const { text, send } = require("micro");
 const logger = require("./lib/log");
 const runScript = require("./lib/run-script");
@@ -8,7 +7,7 @@ const slackNotification = require("./lib/slack-notification");
 module.exports = async (req, res) => {
   const hooks = require("./config/hook");
   const { slackConfig } = require("./config/config");
-  const { pathname } = await parse(req.url, false); // gets url path
+  const { pathname } = new URL(req.url, "http://dummy");
 
   if (pathname === "/ping") return send(res, 200, "pong");
 
@@ -17,15 +16,13 @@ module.exports = async (req, res) => {
     rawBody = await text(req);
     payload = JSON.parse(rawBody);
   } catch (e) {
-    logger("err", "Error parsing request:");
-    logger("err", e);
-    logger("err", {
+    logger("err", "Error parsing request:\n" + JSON.stringify({
       method: req.method,
       path: pathname,
       contentType: req.headers["content-type"],
       bodyLength: rawBody?.length,
       bodyPreview: rawBody?.slice(0, 200)
-    });
+    }));
     return send(res, 400, "Missing JSON payload");
   }
 
