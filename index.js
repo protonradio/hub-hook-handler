@@ -1,5 +1,4 @@
-const { parse } = require("url");
-const { json, send } = require("micro");
+const { text, send } = require("micro");
 const logger = require("./lib/log");
 const runScript = require("./lib/run-script");
 const validateReq = require("./lib/validate-req");
@@ -8,22 +7,22 @@ const slackNotification = require("./lib/slack-notification");
 module.exports = async (req, res) => {
   const hooks = require("./config/hook");
   const { slackConfig } = require("./config/config");
-  const { pathname } = await parse(req.url, false); // gets url path
+  const { pathname } = new URL(req.url, "http://dummy");
 
   if (pathname === "/ping") return send(res, 200, "pong");
 
-  let payload;
+  let payload, rawBody;
   try {
-    logger("debug", {
-      method: req.method,
-      path: req.path,
-      contentType: req.headers["content-type"],
-      body: req.body
-    });
-    payload = await json(req);
+    rawBody = await text(req);
+    payload = JSON.parse(rawBody);
   } catch (e) {
-    logger("err", "Missing JSON payload");
-    logger("err", e);
+    logger("err", "Error parsing request:\n" + JSON.stringify({
+      method: req.method,
+      path: pathname,
+      contentType: req.headers["content-type"],
+      bodyLength: rawBody?.length,
+      bodyPreview: rawBody?.slice(0, 200)
+    }));
     return send(res, 400, "Missing JSON payload");
   }
 
